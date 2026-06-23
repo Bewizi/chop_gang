@@ -9,11 +9,13 @@ import 'package:chop_gang/core/ui/extension/app_spacing_extension.dart';
 import 'package:chop_gang/core/ui/layouts/app_scaffold.dart';
 import 'package:chop_gang/core/variables/app_inset.dart';
 import 'package:chop_gang/core/variables/app_radius.dart';
+import 'package:chop_gang/core/variables/app_svgs.dart';
 
 import 'package:chop_gang/core/variables/colors.dart';
 import 'package:chop_gang/features/auth/presentation/widgets/need_help.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pinput/pinput.dart';
 
@@ -31,24 +33,16 @@ class _VerifyOtpState extends State<VerifyOtp> {
     return '$minutes:${seconds.toString().padLeft(2, '0')}';
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _startTimer();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _timer?.cancel();
-  }
-
   bool _isTimerRunning = true;
   Timer? _timer;
   int _timerSeconds = 60;
 
   void _startTimer() {
-    Timer.periodic(const Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!mounted) {
+        timer.cancel();
+        return;
+      }
       setState(() {
         if (_timerSeconds > 0) {
           _timerSeconds--;
@@ -58,6 +52,18 @@ class _VerifyOtpState extends State<VerifyOtp> {
         }
       });
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _startTimer();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -84,9 +90,20 @@ class _VerifyOtpState extends State<VerifyOtp> {
             child: Column(
               crossAxisAlignment: .start,
               children: [
-                const Align(
-                  alignment: Alignment.bottomRight,
-                  child: NeedHelp(),
+                Row(
+                  mainAxisAlignment: .spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        context.pop();
+                      },
+                      child: SvgPicture.asset(
+                        AppSvgs.kBackIconArrow,
+                      ),
+                    ),
+
+                    const NeedHelp(),
+                  ],
                 ),
                 16.verticalSpacing,
                 AppText(
