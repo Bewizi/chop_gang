@@ -1,16 +1,21 @@
+import 'dart:async';
+
 import 'package:chop_gang/core/router/app_router.dart';
 import 'package:chop_gang/core/theme/app_text_theme.dart';
 import 'package:chop_gang/core/ui/components/app_button.dart';
 import 'package:chop_gang/core/ui/components/app_text.dart';
-import 'package:chop_gang/core/ui/components/app_text_field.dart';
+
 import 'package:chop_gang/core/ui/extension/app_spacing_extension.dart';
 import 'package:chop_gang/core/ui/layouts/app_scaffold.dart';
 import 'package:chop_gang/core/variables/app_inset.dart';
 import 'package:chop_gang/core/variables/app_radius.dart';
+
 import 'package:chop_gang/core/variables/colors.dart';
 import 'package:chop_gang/features/auth/presentation/widgets/need_help.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pinput/pinput.dart';
 
 class VerifyOtp extends StatefulWidget {
   const VerifyOtp({super.key});
@@ -20,8 +25,40 @@ class VerifyOtp extends StatefulWidget {
 }
 
 class _VerifyOtpState extends State<VerifyOtp> {
-  final TextEditingController _fullName = TextEditingController();
-  bool isChecked = false;
+  String get _timerText {
+    final minutes = _timerSeconds ~/ 60;
+    final seconds = _timerSeconds % 60;
+    return '$minutes:${seconds.toString().padLeft(2, '0')}';
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _startTimer();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _timer?.cancel();
+  }
+
+  bool _isTimerRunning = true;
+  Timer? _timer;
+  int _timerSeconds = 60;
+
+  void _startTimer() {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        if (_timerSeconds > 0) {
+          _timerSeconds--;
+        } else {
+          timer.cancel();
+          _isTimerRunning = false;
+        }
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,95 +98,80 @@ class _VerifyOtpState extends State<VerifyOtp> {
                   ),
                 ),
                 4.verticalSpacing,
-                AppText(
-                  'Enter the 6-digit code we just sent. '
-                  '\nCheck your SMS or WhatsApp, your squad is waiting!',
+                AppRichText(
                   style: appTextTheme.titleMedium?.copyWith(
                     fontFamily: 'Supreme',
                     color: AppColors.kCarbonBlack900,
                     fontWeight: FontWeight.w400,
                   ),
+                  spans: const [
+                    TextSpan(
+                      text: 'Enter the 6-digit code we just sent. ',
+                    ),
+                    TextSpan(
+                      text: '\nCheck your ',
+                    ),
+                    TextSpan(
+                      text: 'SMS ',
+                      style: TextStyle(
+                        color: AppColors.kFlagRed500,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    TextSpan(text: 'or'),
+                    TextSpan(
+                      text: ' WhatsApp,',
+                      style: TextStyle(
+                        color: AppColors.kFlagRed500,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    TextSpan(text: ' your squad is waiting!'),
+                  ],
                 ),
-                24.verticalSpacing,
-                Form(
-                  child: Column(
-                    crossAxisAlignment: .start,
-                    children: [
-                      // email address
-                      AppTextField(
-                        title: 'Email Address',
-                        hintText: 'Enter your Email Address',
-                        controller: _fullName,
+                32.verticalSpacing,
+                Center(child: _buildOtpInput()),
+                32.verticalSpacing,
+                Row(
+                  mainAxisAlignment: .spaceBetween,
+                  children: [
+                    GestureDetector(
+                      child: AppText(
+                        'Resend Code',
+                        style: appTextTheme.titleSmall?.copyWith(
+                          color: AppColors.kCarbonBlack900,
+                          fontFamily: 'Supreme',
+                          fontWeight: FontWeight.w500,
+                          decoration: TextDecoration.underline,
+                          decorationStyle: TextDecorationStyle.solid,
+                        ),
                       ),
-                      16.verticalSpacing,
-
-                      // password
-                      Column(
-                        crossAxisAlignment: .start,
-                        children: [
-                          AppTextField(
-                            title: 'Password',
-                            hintText: 'Password',
-                            controller: _fullName,
-                          ),
-                          8.verticalSpacing,
-                          Align(
-                            alignment: Alignment.bottomRight,
-                            child: GestureDetector(
-                              onTap: () {},
-                              child: AppText(
-                                'Forgot password?',
-                                style: appTextTheme.titleSmall?.copyWith(
-                                  fontFamily: 'Supreme',
-                                  color: AppColors.kCarbonBlack900,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                    ),
+                    // timer
+                    AnimatedOpacity(
+                      opacity: _isTimerRunning ? 1 : 0,
+                      duration: const Duration(milliseconds: 300),
+                      child: AppText(
+                        _timerText,
+                        style: appTextTheme.titleSmall?.copyWith(
+                          color: AppColors.kCarbonBlack900,
+                          fontFamily: 'Supreme',
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-
-                      // checkbox remember me
-                      Row(
-                        children: [
-                          Checkbox(
-                            side: const BorderSide(
-                              color: AppColors.kDarkSpruce800,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: AppRadius.smallRadius,
-                            ),
-                            value: isChecked,
-                            onChanged: (value) {
-                              setState(() {
-                                isChecked = !isChecked;
-                              });
-                            },
-                            fillColor: WidgetStatePropertyAll<Color>(
-                              AppColors.kWhiteSmoke50.withValues(alpha: 0.5),
-                            ),
-                          ),
-                          AppText(
-                            'Remember me',
-                            style: appTextTheme.titleSmall?.copyWith(
-                              fontFamily: 'Supreme',
-                              color: AppColors.kCarbonBlack900,
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      SizedBox(
-                        height: MediaQuery.sizeOf(context).height * 0.3,
-                      ),
-                      AppButton(
-                        onPressed: () {},
-                        text: 'Login to Account',
-                        textColors: AppColors.kWhite,
-                        bgColors: AppColors.kBlazeOrange500,
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
+                ),
+                const Spacer(),
+                AppButton(
+                  bgColors: AppColors.kBlazeOrange500,
+                  textColors: AppColors.kWhite,
+                  text: 'Verify Otp',
+                  onPressed: () {
+                    context.push('');
+                  },
                 ),
                 8.verticalSpacing,
                 Center(
@@ -160,12 +182,12 @@ class _VerifyOtpState extends State<VerifyOtp> {
                     ),
                     spans: [
                       const TextSpan(
-                        text: 'Don’t have an account? ',
+                        text: 'Already have an account?',
                       ),
                       TextSpan(
                         recognizer: TapGestureRecognizer()
-                          ..onTap = () => SignUpRoute().go(context),
-                        text: ' Create Account',
+                          ..onTap = () => LoginRoute().go(context),
+                        text: ' Login',
                         style: const TextStyle(
                           fontWeight: FontWeight.w700,
                           decorationStyle: TextDecorationStyle.solid,
@@ -177,6 +199,42 @@ class _VerifyOtpState extends State<VerifyOtp> {
                 ),
               ],
             ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildOtpInput() {
+    return Form(
+      child: Pinput(
+        length: 6,
+        defaultPinTheme: PinTheme(
+          width: 56,
+          height: 56,
+          textStyle: const TextStyle(
+            fontSize: 20,
+            color: AppColors.kCarbonBlack900,
+            fontWeight: FontWeight.w600,
+          ),
+          decoration: BoxDecoration(
+            borderRadius: AppRadius.mediumRadius,
+
+            color: AppColors.kWhiteSmoke50.withValues(alpha: 0.5),
+          ),
+        ),
+        focusedPinTheme: PinTheme(
+          width: 56,
+          height: 56,
+          textStyle: const TextStyle(
+            fontSize: 20,
+            color: AppColors.kCarbonBlack900,
+            fontWeight: FontWeight.w600,
+          ),
+          decoration: BoxDecoration(
+            borderRadius: AppRadius.mediumRadius,
+            border: Border.all(color: AppColors.kCarbonBlack900),
+            color: AppColors.kWhiteSmoke50.withValues(alpha: 0.5),
           ),
         ),
       ),
