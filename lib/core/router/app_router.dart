@@ -1,5 +1,6 @@
 import 'package:chop_gang/features/auth/presentation/pages/login_screen.dart';
 import 'package:chop_gang/features/auth/presentation/pages/sign_up.dart';
+import 'package:chop_gang/features/auth/presentation/pages/verify_otp.dart';
 import 'package:chop_gang/features/onboarding/onboarding_screen.dart';
 import 'package:chop_gang/features/splashscreen/splashscreen.dart';
 import 'package:flutter/material.dart';
@@ -31,17 +32,24 @@ class OnboardingScreenRoute extends GoRouteData with $OnboardingScreenRoute {
       const OnboardingScreen();
 }
 
-// signuo screen
+// signup screen
 @TypedGoRoute<SignUpRoute>(path: '/signup')
 class SignUpRoute extends GoRouteData with $SignUpRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) => const SignUp();
 }
 
-// signuo screen
+// login screen
 @TypedGoRoute<LoginRoute>(path: '/loginScreen')
 class LoginRoute extends GoRouteData with $LoginRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const LoginScreen();
+}
+
+// verify otp screen
+@TypedGoRoute<VerifyOtpRoute>(path: '/verifyOtp')
+class VerifyOtpRoute extends GoRouteData with $VerifyOtpRoute {
+  @override
+  Widget build(BuildContext context, GoRouterState state) => const VerifyOtp();
 }

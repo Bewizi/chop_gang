@@ -11,6 +11,7 @@ List<RouteBase> get $appRoutes => [
   $onboardingScreenRoute,
   $signUpRoute,
   $loginRoute,
+  $verifyOtpRoute,
 ];
 
 RouteBase get $splashScreenRoute =>
@@ -94,6 +95,29 @@ mixin $LoginRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location('/loginScreen');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $verifyOtpRoute =>
+    GoRouteData.$route(path: '/verifyOtp', factory: $VerifyOtpRoute._fromState);
+
+mixin $VerifyOtpRoute on GoRouteData {
+  static VerifyOtpRoute _fromState(GoRouterState state) => VerifyOtpRoute();
+
+  @override
+  String get location => GoRouteData.$location('/verifyOtp');
 
   @override
   void go(BuildContext context) => context.go(location);

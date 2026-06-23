@@ -44,8 +44,19 @@ flutter:
         - asset: fonts/nectarine-demo.regular.otf
     - family: Supreme
       fonts:
-        - asset: fonts/Supreme-Regular.otf
-        - asset: fonts/Supreme-Bold.otf
-        - asset: fonts/Supreme-Medium.otf
-        - asset: fonts/Supreme-Light.otf
-        - asset: fonts/Supreme-Italic.otf
+        - asset: fonts/supreme/Supreme-Regular.otf
+        - asset: fonts/supreme/Supreme-Bold.otf
+        - asset: fonts/supreme/Supreme-Medium.otf
+        - asset: fonts/supreme/Supreme-Light.otf
+        - asset: fonts/supreme/Supreme-Italic.otf
+    - family: Satoshi
+      fonts:
+        - asset: fonts/satoshi/Satoshi-Black.otf
+        - asset: fonts/satoshi/Satoshi-BlackItalic.otf
+        - asset: fonts/satoshi/Satoshi-Bold.otf
+        - asset: fonts/satoshi/Satoshi-BoldItalic.otf
+        - asset: fonts/satoshi/Satoshi-Italic.otf
+        - asset: fonts/satoshi/Satoshi-LightItalic.otf
+        - asset: fonts/satoshi/Satoshi-Medium.otf
+        - asset: fonts/satoshi/Satoshi-MediumItalic.otf
+        - asset: fonts/satoshi/Satoshi-Regular.otf

@@ -10,6 +10,7 @@ import 'package:chop_gang/core/variables/colors.dart';
 import 'package:chop_gang/features/auth/presentation/widgets/need_help.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -119,7 +120,9 @@ class _SignUpState extends State<SignUp> {
                         24.verticalSpacing,
 
                         AppButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.push('/verifyOtp');
+                          },
                           text: 'Create Account',
                           textColors: AppColors.kWhite,
                           bgColors: AppColors.kBlazeOrange500,
