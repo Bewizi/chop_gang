@@ -44,6 +44,11 @@ class AppTextField extends StatelessWidget {
       validator: validator,
       controller: controller,
       onChanged: onChanged,
+      style: appTextTheme.titleMedium?.copyWith(
+        color: AppColors.kCarbonBlack900,
+        fontFamily: 'Supreme',
+        fontWeight: FontWeight.w600,
+      ),
       decoration:
           inputDecoration ??
           InputDecoration(

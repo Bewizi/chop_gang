@@ -114,10 +114,14 @@ RouteBase get $verifyOtpRoute =>
     GoRouteData.$route(path: '/verifyOtp', factory: $VerifyOtpRoute._fromState);
 
 mixin $VerifyOtpRoute on GoRouteData {
-  static VerifyOtpRoute _fromState(GoRouterState state) => VerifyOtpRoute();
+  static VerifyOtpRoute _fromState(GoRouterState state) =>
+      VerifyOtpRoute(email: state.uri.queryParameters['email']!);
+
+  VerifyOtpRoute get _self => this as VerifyOtpRoute;
 
   @override
-  String get location => GoRouteData.$location('/verifyOtp');
+  String get location =>
+      GoRouteData.$location('/verifyOtp', queryParams: {'email': _self.email});
 
   @override
   void go(BuildContext context) => context.go(location);

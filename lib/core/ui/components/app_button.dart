@@ -17,6 +17,7 @@ class AppButton extends StatelessWidget {
     this.fontFamily,
     this.fontWeight,
     this.fontSize,
+    this.isLoading,
     super.key,
   });
 
@@ -31,6 +32,7 @@ class AppButton extends StatelessWidget {
   final String? fontFamily;
   final FontWeight? fontWeight;
   final double? fontSize;
+  final bool? isLoading;
 
   @override
   Widget build(BuildContext context) {
