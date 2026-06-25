@@ -11,7 +11,7 @@ part 'app_router.g.dart';
 final appRouter = GoRouter(
   routes: $appRoutes,
   initialLocation: SplashScreenRoute.path,
-  redirect: (context, state) {},
+  redirect: (context, state) => null,
 );
 
 // entry point
@@ -50,6 +50,11 @@ class LoginRoute extends GoRouteData with $LoginRoute {
 // verify otp screen
 @TypedGoRoute<VerifyOtpRoute>(path: '/verifyOtp')
 class VerifyOtpRoute extends GoRouteData with $VerifyOtpRoute {
+  const VerifyOtpRoute({required this.email});
+
+  final String email;
+
   @override
-  Widget build(BuildContext context, GoRouterState state) => const VerifyOtp();
+  Widget build(BuildContext context, GoRouterState state) =>
+      VerifyOtp(email: email);
 }
