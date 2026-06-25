@@ -81,10 +81,16 @@ class AppTextField extends StatelessWidget {
             ),
             prefixIcon: prefixIcon,
             suffixIcon: suffixIcon != null
-                ? InkWell(
-                    onTap: onSuffixIconTap,
-                    child: suffixIcon,
-                  )
+                ? (onSuffixIconTap != null
+                    ? InkWell(
+                        onTap: onSuffixIconTap,
+                        borderRadius: BorderRadius.circular(AppRadius.medium),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: suffixIcon,
+                        ),
+                      )
+                    : suffixIcon)
                 : null,
             prefixIconColor: AppColors.kCarbonBlack900,
             suffixIconColor: AppColors.kCarbonBlack900,

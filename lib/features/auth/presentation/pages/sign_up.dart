@@ -12,7 +12,6 @@ import 'package:chop_gang/features/auth/presentation/widgets/need_help.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -29,6 +28,8 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _password = TextEditingController();
   final TextEditingController _confirmPassword = TextEditingController();
   final TextEditingController _referralCode = TextEditingController();
+  bool _isPasswordVisible = false;
+  bool _isConfirmPasswordVisible = false;
 
   void _signUp() {
     if (_formKey.currentState?.validate() ?? false) {
@@ -44,6 +45,18 @@ class _SignUpState extends State<SignUp> {
         ),
       );
     }
+  }
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      _isPasswordVisible = !_isPasswordVisible;
+    });
+  }
+
+  void _toggleConfirmPasswordVisibility() {
+    setState(() {
+      _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
+    });
   }
 
   @override
@@ -136,6 +149,10 @@ class _SignUpState extends State<SignUp> {
                               title: 'Full Name',
                               hintText: 'Enter your Full Name',
                               controller: _fullName,
+                              prefixIcon: const Icon(
+                                Icons.person,
+                                size: 20,
+                              ),
                             ),
                             16.verticalSpacing,
                             // email address
@@ -143,6 +160,10 @@ class _SignUpState extends State<SignUp> {
                               title: 'Email Address',
                               hintText: 'Enter your Email Address',
                               controller: _email,
+                              prefixIcon: const Icon(
+                                Icons.mail_outline_rounded,
+                                size: 20,
+                              ),
                               validator: (value) {
                                 if (!RegExp(
                                   r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
@@ -166,6 +187,10 @@ class _SignUpState extends State<SignUp> {
                               hintText: 'Enter your Phone Number',
                               controller: _phoneNumber,
                               keyboardType: TextInputType.number,
+                              prefixIcon: const Icon(
+                                Icons.local_phone_rounded,
+                                size: 20,
+                              ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Phone Number is required';
@@ -179,9 +204,24 @@ class _SignUpState extends State<SignUp> {
                               title: 'Password',
                               hintText: 'Password',
                               controller: _password,
-                              obscureText: true,
+                              obscureText: !_isPasswordVisible,
+                              prefixIcon: const Icon(
+                                Icons.lock_outline_rounded,
+                                size: 20,
+                              ),
+                              suffixIcon: Icon(
+                                _isPasswordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                size: 20,
+                              ),
+                              onSuffixIconTap: _togglePasswordVisibility,
                               validator: (value) {
-                                if (value == null || value.isEmpty) {
+                                if (value!.length < 8) {
+                                  return 'Password must be at least 8 characters';
+                                }
+
+                                if (value.isEmpty) {
                                   return 'Password is required';
                                 }
                                 return null;
@@ -193,7 +233,18 @@ class _SignUpState extends State<SignUp> {
                               title: 'Confirm Password',
                               hintText: 'Confirm your Password',
                               controller: _confirmPassword,
-                              obscureText: true,
+                              obscureText: !_isConfirmPasswordVisible,
+                              prefixIcon: const Icon(
+                                Icons.lock_outline_rounded,
+                                size: 20,
+                              ),
+                              suffixIcon: Icon(
+                                _isConfirmPasswordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                size: 20,
+                              ),
+                              onSuffixIconTap: _toggleConfirmPasswordVisibility,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Confirm Password is required';
@@ -216,6 +267,7 @@ class _SignUpState extends State<SignUp> {
 
                             AppButton(
                               onPressed: _signUp,
+                              isLoading: state is AuthLoading,
                               text: 'Create Account',
                               textColors: AppColors.kWhite,
                               bgColors: AppColors.kBlazeOrange500,

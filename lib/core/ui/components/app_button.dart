@@ -37,7 +37,7 @@ class AppButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onPressed,
+      onTap: isLoading == true ? null : onPressed,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12),
         width: width ?? MediaQuery.sizeOf(context).width,
@@ -53,15 +53,24 @@ class AppButton extends StatelessWidget {
                   : null),
         ),
         child: Center(
-          child: AppText(
-            text,
-            style: appTextTheme.titleMedium?.copyWith(
-              color: textColors,
-              fontFamily: fontFamily,
-              fontWeight: fontWeight,
-              fontSize: fontSize,
-            ),
-          ),
+          child: isLoading == true
+              ? SizedBox(
+                  height: 20,
+                  width: 20,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: textColors ?? AppColors.kWhite,
+                  ),
+                )
+              : AppText(
+                  text,
+                  style: appTextTheme.titleMedium?.copyWith(
+                    color: textColors,
+                    fontFamily: fontFamily,
+                    fontWeight: fontWeight,
+                    fontSize: fontSize,
+                  ),
+                ),
         ),
       ),
     );
