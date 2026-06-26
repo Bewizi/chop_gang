@@ -12,6 +12,7 @@ List<RouteBase> get $appRoutes => [
   $signUpRoute,
   $loginRoute,
   $verifyOtpRoute,
+  $appShellRouteData,
 ];
 
 RouteBase get $splashScreenRoute =>
@@ -122,6 +123,151 @@ mixin $VerifyOtpRoute on GoRouteData {
   @override
   String get location =>
       GoRouteData.$location('/verifyOtp', queryParams: {'email': _self.email});
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $appShellRouteData => StatefulShellRouteData.$route(
+  factory: $AppShellRouteDataExtension._fromState,
+  branches: [
+    StatefulShellBranchData.$branch(
+      routes: [
+        GoRouteData.$route(path: '/home', factory: $HomeRoute._fromState),
+      ],
+    ),
+    StatefulShellBranchData.$branch(
+      routes: [
+        GoRouteData.$route(
+          path: '/group-order',
+          factory: $GroupOrderPageRoute._fromState,
+        ),
+      ],
+    ),
+    StatefulShellBranchData.$branch(
+      routes: [
+        GoRouteData.$route(path: '/order', factory: $OrderPageRoute._fromState),
+      ],
+    ),
+    StatefulShellBranchData.$branch(
+      routes: [
+        GoRouteData.$route(path: '/chat', factory: $ChatPageRoute._fromState),
+      ],
+    ),
+    StatefulShellBranchData.$branch(
+      routes: [
+        GoRouteData.$route(
+          path: '/profile',
+          factory: $ProfilePageRoute._fromState,
+        ),
+      ],
+    ),
+  ],
+);
+
+extension $AppShellRouteDataExtension on AppShellRouteData {
+  static AppShellRouteData _fromState(GoRouterState state) =>
+      const AppShellRouteData();
+}
+
+mixin $HomeRoute on GoRouteData {
+  static HomeRoute _fromState(GoRouterState state) => const HomeRoute();
+
+  @override
+  String get location => GoRouteData.$location('/home');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $GroupOrderPageRoute on GoRouteData {
+  static GroupOrderPageRoute _fromState(GoRouterState state) =>
+      const GroupOrderPageRoute();
+
+  @override
+  String get location => GoRouteData.$location('/group-order');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $OrderPageRoute on GoRouteData {
+  static OrderPageRoute _fromState(GoRouterState state) =>
+      const OrderPageRoute();
+
+  @override
+  String get location => GoRouteData.$location('/order');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $ChatPageRoute on GoRouteData {
+  static ChatPageRoute _fromState(GoRouterState state) => const ChatPageRoute();
+
+  @override
+  String get location => GoRouteData.$location('/chat');
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $ProfilePageRoute on GoRouteData {
+  static ProfilePageRoute _fromState(GoRouterState state) =>
+      const ProfilePageRoute();
+
+  @override
+  String get location => GoRouteData.$location('/profile');
 
   @override
   void go(BuildContext context) => context.go(location);
