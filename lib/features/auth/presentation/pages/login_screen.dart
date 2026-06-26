@@ -104,11 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 BlocConsumer<AuthBloc, AuthState>(
                   listener: (context, state) {
                     if (state is AuthLoginSuccess) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: AppText('Login Successful'),
-                        ),
-                      );
+                      const HomeRoute().go(context);
                     }
 
                     if (state is AuthFailure) {

@@ -1,3 +1,4 @@
+import 'package:chop_gang/core/theme/app_text_theme.dart';
 import 'package:chop_gang/core/variables/colors.dart';
 import 'package:chop_gang/features/auth/presentation/pages/login_screen.dart';
 import 'package:chop_gang/features/auth/presentation/pages/sign_up.dart';
@@ -173,62 +174,82 @@ class ScaffoldWithBottomNavBar extends StatelessWidget {
         onTap: (index) => navigationShell.goBranch(index),
         type: BottomNavigationBarType.fixed,
         selectedItemColor: AppColors.kBlazeOrange500,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
+        selectedLabelStyle: appTextTheme.titleSmall?.copyWith(
+          fontFamily: 'Supreme',
+          fontWeight: FontWeight.w500,
+          color: AppColors.kBlazeOrange500,
+        ),
+        unselectedLabelStyle: appTextTheme.titleSmall?.copyWith(
+          fontFamily: 'Supreme',
+          color: AppColors.kCarbonBlack900,
+        ),
+        backgroundColor: AppColors.kWhite.withValues(alpha: 0.7),
+
+        elevation: 0,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home_rounded,
               color: AppColors.kCarbonBlack900,
+              size: 32,
             ),
             label: 'Home',
             activeIcon: Icon(
               Icons.home_rounded,
               color: AppColors.kBlazeOrange500,
+              size: 32,
             ),
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.group_rounded,
               color: AppColors.kCarbonBlack900,
+              size: 32,
             ),
             label: 'Group Order',
             activeIcon: Icon(
               Icons.group_rounded,
               color: AppColors.kBlazeOrange500,
+              size: 32,
             ),
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.shopping_cart,
               color: AppColors.kCarbonBlack900,
+              size: 32,
             ),
             label: 'Order',
             activeIcon: Icon(
               Icons.shopping_cart,
               color: AppColors.kBlazeOrange500,
+              size: 32,
             ),
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.message_rounded,
               color: AppColors.kCarbonBlack900,
+              size: 32,
             ),
             label: 'Chat',
             activeIcon: Icon(
               Icons.message_rounded,
               color: AppColors.kBlazeOrange500,
+              size: 32,
             ),
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.person_rounded,
               color: AppColors.kCarbonBlack900,
+              size: 32,
             ),
             label: 'Profile',
             activeIcon: Icon(
               Icons.person_rounded,
               color: AppColors.kBlazeOrange500,
+              size: 32,
             ),
           ),
         ],
