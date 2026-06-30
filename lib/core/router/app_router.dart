@@ -183,71 +183,71 @@ class ScaffoldWithBottomNavBar extends StatelessWidget {
           fontFamily: 'Supreme',
           color: AppColors.kCarbonBlack900,
         ),
-        backgroundColor: AppColors.kWhite.withValues(alpha: 0.7),
+        backgroundColor: AppColors.kWhite,
 
         elevation: 0,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.home_rounded,
+              Icons.home_outlined,
               color: AppColors.kCarbonBlack900,
               size: 32,
             ),
             label: 'Home',
             activeIcon: Icon(
-              Icons.home_rounded,
+              Icons.home_outlined,
               color: AppColors.kBlazeOrange500,
               size: 32,
             ),
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.group_rounded,
+              Icons.group_outlined,
               color: AppColors.kCarbonBlack900,
               size: 32,
             ),
             label: 'Group Order',
             activeIcon: Icon(
-              Icons.group_rounded,
+              Icons.group_outlined,
               color: AppColors.kBlazeOrange500,
               size: 32,
             ),
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.shopping_cart,
+              Icons.shopping_cart_outlined,
               color: AppColors.kCarbonBlack900,
               size: 32,
             ),
             label: 'Order',
             activeIcon: Icon(
-              Icons.shopping_cart,
+              Icons.shopping_cart_outlined,
               color: AppColors.kBlazeOrange500,
               size: 32,
             ),
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.message_rounded,
+              Icons.message_outlined,
               color: AppColors.kCarbonBlack900,
               size: 32,
             ),
             label: 'Chat',
             activeIcon: Icon(
-              Icons.message_rounded,
+              Icons.message_outlined,
               color: AppColors.kBlazeOrange500,
               size: 32,
             ),
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.person_rounded,
+              Icons.person_outline,
               color: AppColors.kCarbonBlack900,
               size: 32,
             ),
             label: 'Profile',
             activeIcon: Icon(
-              Icons.person_rounded,
+              Icons.person_outline,
               color: AppColors.kBlazeOrange500,
               size: 32,
             ),
